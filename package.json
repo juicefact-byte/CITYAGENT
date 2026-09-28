@@ -1,0 +1,10 @@
+{
+  "name": "cityagent",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "web:dev": "npm --workspace apps/web run dev",
+    "ui:check": "node packages/ui/scripts/check-tokens.js"
+  }
+}
