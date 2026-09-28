@@ -1,0 +1,25 @@
+/* CITYAGENT design tokens — import in web; mirror in Flutter ThemeData */
+:root {
+  --ca-trust-green: #16a34a;
+  --ca-agent-blue: #2563eb;
+  --ca-hotel-amber: #b45309;
+  --ca-manager-purple: #7c3aed;
+  --ca-ink: #0f172a;
+  --ca-muted: #64748b;
+  --ca-line: #e2e8f0;
+  --ca-bg: #f8fafc;
+  --ca-card: #ffffff;
+  --ca-danger: #dc2626;
+  --ca-warn-bg: #fef3c7;
+  --ca-success-bg: #dcfce7;
+  --ca-info-bg: #dbeafe;
+  --ca-radius-s: 9px;
+  --ca-radius-m: 14px;
+  --ca-touch-min: 44px;
+}
+.ca-badge { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--ca-line); }
+.ca-badge--owner { background: var(--ca-success-bg); border-color: #86efac; }
+.ca-badge--agent { background: var(--ca-info-bg); border-color: #93c5fd; }
+.ca-badge--hotel { background: var(--ca-warn-bg); border-color: #fcd34d; }
+.ca-btn { min-height: var(--ca-touch-min); border-radius: 10px; padding: 11px 16px; font-weight: 700; }
+.ca-btn--primary { background: var(--ca-trust-green); color: #fff; }
