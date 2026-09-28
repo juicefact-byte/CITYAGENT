@@ -2,8 +2,11 @@
 node_modules/
 dist/
 build/
+.next/
+out/
 .env
 .env.local
+.env*.local
 
 # Flutter / Dart
 .dart_tool/
