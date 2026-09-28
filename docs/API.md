@@ -1,25 +1,67 @@
-# CITYAGENT — API Contracts (MVP, Supabase-first)
+# CITYAGENT API (MVP, Supabase-first)
 
-No custom server Day 1. Clients use Supabase JS (free) against `0001_core.sql` tables + Storage + Auth.
-Add NestJS only when logic outgrows RLS/edge functions (ADR-003).
+Base: Supabase project URL + anon key. Admin endpoints use service-role key server-side only.
 
-## Reads (public)
-- `GET published properties` → `properties` select `status=published`, order `created_at desc`, filters: `city`, `area`, `property_type`, `bedrooms gte`, `rent_amount lte/gte`, `verification_level`, `features contains`.
-- `GET nearby` → PostGIS `ST_DWithin(geom, point, radius_m)` + `approx_geom` returned (exact `geom` never selected publicly).
-- `GET property + images` → `properties` by id + `property_images` order `sort`.
-- `GET reviews` → `reviews` by `property_id`.
+## Conventions
+- Auth: `Authorization: Bearer <supabase JWT>`. Guest read allowed for published only.
+- Errors: `{ error: { code, message } }`. Pagination: `?limit&cursor`.
+- Money: numbers in Naira, 2dp. No hidden fees — all mandatory charges in payload.
 
-## Writes (authed, RLS)
-- `POST properties` (status `draft`) → owner creates; `PATCH` own row (edit/reprice/unavailable).
-- `POST submit` → set own property `draft→submitted`. (Admin moves `submitted→in_review→verified→published` via dashboard/service role.)
-- `POST property_images` → upload to `public-listings/` then insert row.
-- `POST ownership_documents` → upload to `private-docs/` then insert metadata row (never public).
-- `POST favorites` / DELETE → own rows.
-- `POST conversations` + `POST messages` (Realtime subscribe on `messages`).
-- `POST viewing_requests` (slot) → owner PATCH `requested→accepted|rejected|countered`.
-- `POST reports` (reason taxonomy §25) → admin triage.
-- `POST verification_records` → admin/service role only.
+## Endpoints
 
-## Guards
-- State transitions enforced in app + checked in Phase 4 RPC (`submit_property`, `decide_viewing`) — added when edge functions land.
-- Exact `geom` selected only by owner/admin roles; clients request `approx_geom`.
+### Auth / Users
+- `POST /auth/otp` → request email OTP {email}
+- `POST /auth/verify` → {email, token} → session
+- `GET /me` → profile + role + verification summary
+- `PATCH /me` → display_name, phone, avatar
+
+### Locations (OSM-backed, free)
+- `GET /locations/search?q=wuse` → id, city, district, approx_lat/lon (trgm + Nominatim fallback)
+- `GET /locations/:id` → approx only (exact geom never public)
+
+### Properties
+- `GET /properties?city=Abuja&min=0&max=3500000&beds=3&type=apartment&verified=L4&features=parking,security&near=9.08,7.48&radiusKm=2` → published only, cursor pages
+- `GET /properties/:id` → details + images + costs + badge + approx map
+- `POST /properties` (owner) → draft; required: title, description, type, beds/baths/toilets, price, frequency, location_id, features
+- `PATCH /properties/:id` (owner, draft/rejected/expired) → edit/reprice
+- `POST /properties/:id/submit` → draft → submitted (+ verification_records L3 pending)
+- `POST /properties/:id/media` → presigned upload → property_images/videos rows (public bucket)
+- `POST /properties/:id/mark` → {status: rented|unavailable} (owner)
+
+### Verification (admin; submit→review→verify→approve→publish)
+- `GET /admin/verifications?status=pending` → queue with docs links (private bucket, signed URLs)
+- `POST /admin/verifications/:id/decide` → {approved|rejected|hold, notes, level} → on L3 approve: property verified→published + audit_logs row
+
+### Chat / Viewing
+- `POST /conversations` → {property_id} → id (property auto-attached)
+- `GET /conversations/:id/messages` · `POST /conversations/:id/messages` → {body, image_url?} + block/report flags
+- `POST /properties/:id/viewings` → {slot} → requested
+- `POST /viewings/:id/decision` (owner) → {accepted|rejected|countered, counter_slot?}
+
+### Favorites / Reports / Reviews / Notifications
+- `POST /favorites/:property_id` · `DELETE` · `GET /favorites`
+- `POST /reports` → {property_id, reason (§25 enum), details}
+- `POST /reviews` (post-stay, moderated) · `GET /properties/:id/reviews?status=approved`
+- `GET /notifications` · `POST /notifications/read`
+
+### Admin
+- `GET /admin/users` · `POST /admin/users/:id/suspend|ban`
+- `GET /admin/reports?status=open` · `POST /admin/reports/:id/resolve`
+- `GET /admin/analytics` → users, verified props, searches, views, chats, viewings, reports (§50)
+
+## DTO — Property (create)
+```json
+{
+  "title": "3 Bedroom Apartment",
+  "description": "...",
+  "property_type": "apartment",
+  "bedrooms": 3, "bathrooms": 3, "toilets": 3, "furnished": false,
+  "price": 3500000, "payment_frequency": "yearly",
+  "deposit": 0, "service_charge": 300000, "agency_fee": 0, "agreement_fee": 150000,
+  "location_id": "uuid", "lister_kind": "owner"
+}
+```
+
+## State machines
+Property: draft→submitted→in_review→verified→published→viewing→rented|expired|rejected.
+Viewing: requested→accepted|rejected|countered→completed|cancelled.
