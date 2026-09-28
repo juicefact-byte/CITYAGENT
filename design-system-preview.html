@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CITYAGENT — Design System Preview (Free-only)</title>
+<style>
+:root{
+  --trust-green:#16a34a; --agent-blue:#2563eb; --hotel-amber:#b45309; --manager-purple:#7c3aed;
+  --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc; --card:#ffffff;
+  --danger:#dc2626; --warn-bg:#fef3c7; --radius:14px; --radius-s:9px;
+  --shadow:0 6px 24px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box} body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 18px 60px}
+.hero{background:var(--ink);color:#fff;border-radius:18px;padding:28px;box-shadow:var(--shadow)}
+.hero h1{margin:0 0 6px} .hero p{margin:6px 0;color:#cbd5e1}
+.grid{display:grid;gap:16px} .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+h2{margin:30px 0 10px} h3{margin:0 0 10px} .muted{color:var(--muted)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.sw{border-radius:12px;padding:12px;color:#fff;font-size:13px} .sw small{display:block;opacity:.85}
+.badge{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#f1f5f9;margin:3px}
+.b-owner{background:#dcfce7;border-color:#86efac} .b-agent{background:#dbeafe;border-color:#93c5fd}
+.b-hotel{background:#fef3c7;border-color:#fcd34d} .b-mgr{background:#ede9fe;border-color:#c4b5fd}
+.btn{display:inline-block;border:0;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer;margin:4px 6px 4px 0}
+.btn-p{background:var(--trust-green);color:#fff} .btn-s{background:#e2e8f0} .btn-wa{background:#22c55e;color:#fff} .btn-d{background:var(--danger);color:#fff}
+.prop{display:grid;grid-template-columns:220px 1fr;gap:0;overflow:hidden;padding:0}
+.prop .img{background:linear-gradient(135deg,#0ea5e9,#6366f1);min-height:190px;display:flex;align-items:flex-end;padding:12px;color:#fff;font-weight:700}
+.prop .body{padding:16px}
+.price{font-size:22px;font-weight:800} .feat{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.feat span{background:#f1f5f9;border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-size:12px}
+.costs{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.costs td{padding:6px 4px;border-top:1px dashed var(--line)} .costs td:last-child{text-align:right;font-weight:700}
+.safety{background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:12px;font-size:14px}
+.map{height:190px;border-radius:12px;border:1px dashed #94a3b8;background:repeating-linear-gradient(45deg,#f1f5f9,#f1f5f9 12px,#e2e8f0 12px,#e2e8f0 24px);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+.chat{background:#f1f5f9;border-radius:12px;padding:10px 12px;margin:6px 0;max-width:420px}
+.type{font-size:12px;color:var(--muted)} .h1{font-size:32px;font-weight:800;margin:0} .h2{font-size:24px;font-weight:800;margin:0} .b1{font-size:16px} .cap{font-size:12px}
+@media(max-width:640px){.prop{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>CITYAGENT Design System</h1>
+    <p>Free-only preview — no Figma needed. Tokens + components for mobile (Flutter) &amp; web (Next.js). Promise: “Know who you are dealing with.”</p>
+    <span class="badge b-owner">🟢 OWNER — VERIFIED</span>
+    <span class="badge b-agent">🔵 AGENT — VERIFIED</span>
+    <span class="badge b-hotel">🏨 HOTEL — VERIFIED</span>
+    <span class="badge b-mgr">🟣 MANAGER — VERIFIED</span>
+  </div>
+
+  <h2>1. Color tokens</h2>
+  <div class="swatches">
+    <div class="sw" style="background:#16a34a">Trust green<small>#16a34a · primary CTA</small></div>
+    <div class="sw" style="background:#2563eb">Agent blue<small>#2563eb · agent/info</small></div>
+    <div class="sw" style="background:#b45309">Hotel amber<small>#b45309 · hotel</small></div>
+    <div class="sw" style="background:#7c3aed">Manager purple<small>#7c3aed · manager</small></div>
+    <div class="sw" style="background:#0f172a">Ink<small>#0f172a · text</small></div>
+    <div class="sw" style="background:#64748b">Muted<small>#64748b · secondary</small></div>
+    <div class="sw" style="background:#dc2626">Danger<small>#dc2626 · report/block</small></div>
+  </div>
+
+  <h2>2. Typography (4pt spacing, 14px radius)</h2>
+  <div class="card"><p class="h1">H1 · Find a place</p><p class="h2">H2 · 3 Bedroom Apartment</p><p class="b1">Body · Wuse 2, Abuja — 5–10 photos, full cost breakdown.</p><p class="cap">Caption · Approx location shown; exact hidden until viewing accepted.</p></div>
+
+  <h2>3. Buttons</h2>
+  <div class="card"><button class="btn btn-p">📞 Call Owner</button><button class="btn btn-s">💬 Chat</button><button class="btn btn-wa">WhatsApp</button><button class="btn btn-s">📅 Request Viewing</button><button class="btn btn-d">🚨 Report</button><p class="muted">Primary = green only. Danger = report/block. Radius 10px, min touch 44px.</p></div>
+
+  <div class="grid g2">
+    <div>
+      <h2>4. Property card</h2>
+      <div class="card prop">
+        <div class="img">📷 Exterior · Living · Bed</div>
+        <div class="body">
+          <span class="badge b-owner">🟢 VERIFIED OWNER</span>
+          <h3>3 Bedroom Apartment</h3>
+          <div class="muted">📍 Wuse 2, Abuja · 2.1 km</div>
+          <div class="price">₦3,500,000 <span class="muted" style="font-size:14px">/ year</span></div>
+          <div class="feat"><span>3 Bed</span><span>3 Bath</span><span>Parking</span><span>Water</span><span>Security</span><span>Fenced</span></div>
+          <table class="costs"><tr><td>Service charge</td><td>₦300,000</td></tr><tr><td>Agreement/legal</td><td>₦150,000</td></tr></table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>5. Map + safety</h2>
+      <div class="card"><div class="map">🗺 OpenStreetMap pins (free) — no Google key</div><p class="muted">Public = approx location. Exact released on viewing accept.</p><div class="safety">⚠️ <b>Never transfer money before inspection.</b> Share this viewing with a trusted contact: listing + approx location + profile + time.</div></div>
+      <h2>6. Chat + viewing</h2>
+      <div class="card"><div class="chat">Hello, is the 2-bed in Lafia still available? <div class="type">Attached: 2 Bed — Lafia · ✓✓</div></div><div class="chat" style="background:#dcfce7">Yes, available. Free Thursday 2pm? <div class="type">Owner · Verified</div></div><button class="btn btn-s">Accept</button><button class="btn btn-s">Counter time</button></div>
+    </div>
+  </div>
+
+  <h2>7. Verification levels</h2>
+  <div class="card"><span class="badge">L1 · Phone ✓</span><span class="badge">L2 · Identity ✓</span><span class="badge b-owner">L3 · Property ✓</span><span class="badge b-owner">L4 · Verified Owner ★</span><p class="muted">Facts only — never “100% trustworthy”. Docs stay private/encrypted.</p></div>
+  <p class="muted">Free stack behind this: Flutter · Next.js + Cloudflare Pages · Supabase (Postgres/PostGIS/Auth/Storage) · OSM + Leaflet/flutter_map · FCM · GitHub Actions · Penpot. Open this file offline — no build step.</p>
+</div>
+</body>
+</html>

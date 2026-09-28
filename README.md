@@ -38,7 +38,7 @@ Workflow: `Submit → Review → Verify → Approve → Publish`. No listing bec
 - Safety: never-transfer-money warnings, inspection sharing with trusted contact
 - Future: AI matching / City Assistant, payments (CITYAGENT Pay), moving & services
 
-Full spec: see `CITYAGENT/CITYAGENT.md` (PRD v1.0, 60 sections).
+Full spec: see `docs/PRD.md` (PRD v1.0, 60 sections). Decisions: `docs/DECISIONS.md`. Frozen scope: `docs/MVP-SCOPE.md`. Build order: `IMPLEMENTATION_PLAN.md`. Visual tokens/components: `design-system-preview.html` (open in browser).
 
 ## MVP Scope (v1)
 
@@ -63,9 +63,12 @@ Phase 3: Pay, Move, Services, Inspect ecosystem.
 ## Repo Structure
 
 ```text
-CITYAGENT/
-  CITYAGENT.md   # Full Product Requirements Document
-README.md        # This file
+docs/PRD.md                # Full Product Requirements Document
+docs/DECISIONS.md          # Free-only architecture decisions
+docs/MVP-SCOPE.md          # Frozen v1 scope + pilot city
+IMPLEMENTATION_PLAN.md     # Phased build plan
+design-system-preview.html # Visual design system (open offline)
+README.md                  # This file
 ```
 
 App code (`apps/mobile`, `apps/web`, `apps/api`) to be scaffolded next.
