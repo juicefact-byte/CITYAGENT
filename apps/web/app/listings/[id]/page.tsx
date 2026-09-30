@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabaseBrowser } from '../../../lib/supabaseClient';
 import { startConversation, requestViewing } from '../../../lib/contact';
+import { toggleFavorite, submitReport } from '../../../lib/engagement';
 
 const badge: Record<string, string> = {
   owner: 'ca-badge ca-badge--owner 🟢 VERIFIED OWNER',
@@ -53,6 +54,27 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
     }
   };
 
+  const fav = async () => {
+    try {
+      const saved = await toggleFavorite(params.id);
+      setMsg(saved ? 'Saved to favorites.' : 'Removed from favorites.');
+    } catch (e: any) {
+      setMsg(e.message);
+    }
+  };
+
+  const report = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    try {
+      await submitReport(params.id, String(fd.get('reason')), String(fd.get('details') ?? ''));
+      setMsg('Report sent to CITYAGENT review.');
+      e.currentTarget.reset();
+    } catch (err: any) {
+      setMsg(err.message);
+    }
+  };
+
   if (!prop) return <main style={{ padding: 20 }}><p>{msg}</p></main>;
   return (
     <main style={{ maxWidth: 720, margin: '40px auto', padding: 20 }}>
@@ -91,6 +113,27 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
       <form onSubmit={viewing} style={{ display: 'flex', gap: 8, marginTop: 12 }}>
         <input type="datetime-local" value={slot} onChange={(e) => setSlot(e.target.value)} required style={{ flex: 1, padding: 12 }} />
         <button className="ca-btn" type="submit">📅 Request viewing</button>
+      </form>
+      <div style={{ marginTop: 12 }}>
+        <button className="ca-btn" onClick={fav}>⭐ Save / unsave</button>{' '}
+        <a className="ca-btn" href="/favorites">My Favorites</a>
+      </div>
+      <form onSubmit={report} style={{ display: 'grid', gap: 8, marginTop: 12, borderTop: '1px dashed #e2e8f0', paddingTop: 12 }}>
+        <b>🚨 Report listing</b>
+        <select name="reason" defaultValue="fake" style={{ padding: 10 }}>
+          <option value="fake">Fake property</option>
+          <option value="wrong_price">Wrong price</option>
+          <option value="rented">Already rented</option>
+          <option value="fake_owner">Fake owner</option>
+          <option value="misleading_photos">Misleading photos</option>
+          <option value="fraud">Fraud attempt</option>
+          <option value="duplicate">Duplicate</option>
+          <option value="wrong_location">Wrong location</option>
+          <option value="harassment">Harassment</option>
+          <option value="other">Other</option>
+        </select>
+        <input name="details" placeholder="Details (optional)" style={{ padding: 10 }} />
+        <button className="ca-btn" type="submit">Send report</button>
       </form>
       <p>{msg}</p>
     </main>
