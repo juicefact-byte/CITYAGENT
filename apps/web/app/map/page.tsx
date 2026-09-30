@@ -12,7 +12,6 @@ export default function MapPage() {
     let map: any;
     (async () => {
       const L = (await import('leaflet')).default;
-      await import('leaflet/dist/leaflet.css');
       map = L.map(divRef.current!).setView([9.08, 7.48], 12); // Wuse, Abuja
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors',

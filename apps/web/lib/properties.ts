@@ -1,4 +1,4 @@
-import { supabaseBrowser } from '../../lib/supabaseClient';
+import { supabaseBrowser } from './supabaseClient';
 import type { PropertyStatus } from '@cityagent/shared';
 
 // Owner listing helpers — drafts stay invisible until admin publishes.
