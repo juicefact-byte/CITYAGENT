@@ -230,6 +230,13 @@ alter table public.notifications enable row level security;
 alter table public.audit_logs enable row level security;
 
 -- Public can read published properties + media + approx locations only.
+-- (drops first: CREATE POLICY has no IF NOT EXISTS, so re-runs stay green)
+drop policy if exists "public published props" on public.properties;
+drop policy if exists "public prop media" on public.property_images;
+drop policy if exists "public prop videos" on public.property_videos;
+drop policy if exists "owner read own" on public.properties;
+drop policy if exists "owner insert own" on public.properties;
+drop policy if exists "owner update own draft" on public.properties;
 create policy "public published props" on public.properties
   for select using (status = 'published');
 create policy "public prop media" on public.property_images
