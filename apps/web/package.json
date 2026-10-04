@@ -9,7 +9,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@cityagent/ui": "*",
     "@supabase/supabase-js": "^2.44.0",
     "leaflet": "^1.9.4",
     "next": "^14.2.0",

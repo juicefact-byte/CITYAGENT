@@ -1,0 +1,8 @@
+# Netlify: builds apps/web (self-contained Next.js app, no workspace deps).
+[build]
+  base = "apps/web"
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"

@@ -1,4 +1,4 @@
-import '@cityagent/ui/tokens.css';
+import './tokens.css';
 import 'leaflet/dist/leaflet.css';
 
 export const metadata = { title: 'CITYAGENT — Find accommodation without the guesswork' };

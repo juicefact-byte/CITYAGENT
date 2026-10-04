@@ -1,5 +1,5 @@
 import { supabaseBrowser } from './supabaseClient';
-import type { PropertyStatus } from '@cityagent/shared';
+type PropertyStatus = 'draft' | 'submitted' | 'in_review' | 'verified' | 'published' | 'viewing' | 'rented' | 'expired' | 'rejected';
 
 // Owner listing helpers — drafts stay invisible until admin publishes.
 export async function createDraft(input: {
