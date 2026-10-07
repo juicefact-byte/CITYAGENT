@@ -6,3 +6,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Next.js Runtime: routes dynamic pages via functions (without this, all routes 404).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
