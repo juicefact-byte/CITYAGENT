@@ -16,11 +16,11 @@ Docs-only items must be DONE before onboarding the first 100 listings.
 - [x] Dashboards: owner signals + admin triage
 
 ## Before pilot
-- [ ] `npm install && npm run build` green in `apps/web`
-- [ ] Supabase project created, `0001_core.sql` + seed applied, buckets `public-listings`/`private-docs` live
-- [ ] All `docs/*-TEST.md` pass against staging (auth→publish→search→chat→viewing→report→dashboards)
-- [ ] Safety copy live (details + chat banners), approx-location only
-- [ ] 100–300 real verified Abuja listings seeded by field team
+- [x] `npm install && npm run build` green in `apps/web` (13 routes, `920d93b`)
+- [x] Supabase project created, `0001_core.sql` + `0002_engagement_rls.sql` + seed applied, buckets `public-listings`/`private-docs` live
+- [x] All `docs/*-TEST.md` pass against staging (auth→publish→search→chat→viewing→report→dashboards)
+- [x] Safety copy live (details + chat banners), approx-location only
+- [ ] 100–300 real verified Abuja listings seeded by field team (see `docs/FIELD-ONBOARDING.md`)
 - [ ] Metrics baseline: searches, views, chats, viewings, reports (§50)
 
 ## Exit (expand to City 2)
