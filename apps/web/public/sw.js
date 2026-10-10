@@ -1,5 +1,5 @@
-/* CITYAGENT service worker — cache-first app shell (free, no deps). v1 */
-const CACHE = 'cityagent-v1';
+/* CITYAGENT service worker — cache-first app shell (free, no deps). v2 */
+const CACHE = 'cityagent-v2';
 const CORE = ['/', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {

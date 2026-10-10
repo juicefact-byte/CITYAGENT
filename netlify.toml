@@ -10,3 +10,9 @@
 # Next.js Runtime: routes dynamic pages via functions (without this, all routes 404).
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Service worker must never be CDN-cached, or updates get stuck.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
